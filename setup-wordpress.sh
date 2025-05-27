@@ -3,7 +3,7 @@ set -e
 
 export $(grep -v '^#' /code/.env | xargs)
 
-WP_PATH="/var/www/html"
+WP_PATH="code"
 WP_CONFIG_PATH="$WP_PATH/wp-config.php"
 
 echo "Maak wp-config.php aan in $WP_CONFIG_PATH"
