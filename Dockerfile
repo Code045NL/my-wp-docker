@@ -1,6 +1,6 @@
 FROM wordpress:latest
 
-WORKDIR /var/www/html
+WORKDIR /
 
 COPY setup-wordpress.sh /code/setup-wordpress.sh
 
