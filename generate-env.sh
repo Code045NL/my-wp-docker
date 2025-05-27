@@ -12,19 +12,19 @@ cat > code/.env <<EOL
 WORDPRESS_ROOT=/home/wp-core
 WORDPRESS_CONTENT=$INSTALL_PATH/wp-content
 
-WP_DATABASE_NAME=wpdb_$INSTALL_NAME
-WP_DATABASE_USER=wpuser
-WP_DATABASE_PASS=secretpass
+WP_DATABASE_NAME=$INSTALL_NAME
+WP_DATABASE_USER=dbusr
+WP_DATABASE_PASS=DBPass001!
 PORT=3306
-HOST=db
+HOST=server_mariadb
 
 WP_PREFIX=wp_
 
 TITEL="Mijn WordPress Site $INSTALL_NAME"
-ADMIN_EMAIL=admin@example.com
-ADMIN_USER=admin_$INSTALL_NAME
-ADMIN_PASS=strongpassword
-DOMAIN=http://$INSTALL_NAME.local
+ADMIN_EMAIL=maurice@code045.nl
+ADMIN_USER=Maurice
+ADMIN_PASS=Code001!
+DOMAIN=http://$PRIMARYDOMAIN
 EOL
 
 echo ".env bestand gemaakt voor $INSTALL_NAME"
