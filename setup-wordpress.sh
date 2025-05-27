@@ -1,11 +1,10 @@
 #!/bin/bash
 set -e
 
-# Load .env variables
-export $(grep -v '^#' .env | xargs)
+export $(grep -v '^#' /code/.env | xargs)
 
-CODE_DIR="/code"
-WP_CONFIG_PATH="$CODE_DIR/wp-config.php"
+WP_PATH="/var/www/html"
+WP_CONFIG_PATH="$WP_PATH/wp-config.php"
 
 echo "Maak wp-config.php aan in $WP_CONFIG_PATH"
 
@@ -22,8 +21,6 @@ define('DB_COLLATE', '');
 
 define('WP_DEBUG', false);
 
-/* That's all, stop editing! Happy blogging. */
-
 if ( !defined('ABSPATH') )
     define('ABSPATH', dirname(__FILE__) . '/');
 
@@ -32,21 +29,20 @@ EOL
 
 echo "wp-config.php is aangemaakt."
 
-# Check of wp core al is geïnstalleerd
-if ! wp core is-installed --path="$CODE_DIR" --allow-root; then
-    echo "WordPress nog niet geïnstalleerd, installatie starten..."
-
-    wp core install \
-        --path="$CODE_DIR" \
-        --url="$DOMAIN" \
-        --title="$TITEL" \
-        --admin_user="$ADMIN_USER" \
-        --admin_password="$ADMIN_PASS" \
-        --admin_email="$ADMIN_EMAIL" \
-        --skip-email \
-        --allow-root
-
-    echo "WordPress is geïnstalleerd."
+if ! wp core is-installed --path="$WP_PATH" --allow-root; then
+  echo "WordPress is nog niet geïnstalleerd, installeren..."
+  wp core install \
+    --path="$WP_PATH" \
+    --url="$DOMAIN" \
+    --title="$TITEL" \
+    --admin_user="$ADMIN_USER" \
+    --admin_password="$ADMIN_PASS" \
+    --admin_email="$ADMIN_EMAIL" \
+    --skip-email \
+    --allow-root
+  echo "WordPress is geïnstalleerd."
 else
-    echo "WordPress is al geïnstalleerd."
+  echo "WordPress is al geïnstalleerd."
 fi
+
+exec apache2-foreground
