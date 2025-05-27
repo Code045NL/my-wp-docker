@@ -2,12 +2,26 @@ version: "3.8"
 
 services:
   wordpress:
-    image: wordpress:latest
+    build: .
     ports:
       - "8080:80"
     volumes:
-      - ${WORDPRESS_ROOT}:/var/www/html
-      - ${WORDPRESS_CONTENT}:/var/www/html/wp-content
+      - /home/wp-core:/code
+      - ${WORDPRESS_CONTENT}:/code/wp-content
+      - ./code:/code
+    depends_on:
+      - db
+
+  db:
+    image: mysql:5.7
+    restart: always
     environment:
-      # eventueel extra env vars
-    command: ["/bin/bash", "/code/setup-wordpress.sh"]
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: ${WP_DATABASE_NAME}
+      MYSQL_USER: ${WP_DATABASE_USER}
+      MYSQL_PASSWORD: ${WP_DATABASE_PASS}
+    volumes:
+      - db_data:/var/lib/mysql
+
+volumes:
+  db_data:
