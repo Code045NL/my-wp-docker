@@ -1,10 +1,12 @@
-## wp-docker-install
-Install wordpress in docker using env file and wp-cli
+# WordPress Docker Multi-Install Setup
 
 ## Setup
 
-- use .env.example to create your .env file
-- build docker image
+1. Zorg dat `/home/wp-core` bestaat en de WordPress core bevat (zonder `wp-config.php` en zonder `wp-content`).
+
+2. Maak per installatie een wp-content map aan, bijvoorbeeld `/home/wp-core/install-1/wp-content`.
+
+3. Genereer een `.env` bestand voor de installatie:
 
 ```bash
-docker build -t my-wordpress-image .
+./generate-env.sh install-1
