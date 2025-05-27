@@ -1,0 +1,13 @@
+version: "3.8"
+
+services:
+  wordpress:
+    image: wordpress:latest
+    ports:
+      - "8080:80"
+    volumes:
+      - ${WORDPRESS_ROOT}:/var/www/html
+      - ${WORDPRESS_CONTENT}:/var/www/html/wp-content
+    environment:
+      # eventueel extra env vars
+    command: ["/bin/bash", "/code/setup-wordpress.sh"]
